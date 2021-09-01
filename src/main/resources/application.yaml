@@ -1,0 +1,31 @@
+resilience4j:
+    circuitbreaker:
+        instances:
+            mockService:
+                slidingWindowSize: 3
+                slidingWindowType: COUNT_BASED
+                #waitDurationInOpenState: 5
+                waitInterval: 10000
+                failureRateThreshold: 50
+                permittedNumberOfCallsInHalfOpenState: 5
+                registerHealthIndicator: true
+                #register-health-indicator: true
+                allowHealthIndicatorToFail: true
+        configs:
+            default:
+                registerHealthIndicator: true
+
+management.health.circuitbreakers.enabled: true
+management:
+  endpoint:
+    health:
+        show-details: always
+
+downstream:
+    mock:
+        base: http://localhost:63553/
+        path: v1/mock/downstream
+        url: ${downstream.mock.base}${downstream.mock.path}
+
+server:
+  port: 63080
