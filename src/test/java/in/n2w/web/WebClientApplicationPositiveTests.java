@@ -39,7 +39,8 @@ public class WebClientApplicationPositiveTests {
                     .get().uri("/v1/mock/upstream")
                     .accept(MediaType.APPLICATION_JSON)
                     .exchange()
-                    .expectStatus().isOk();
+                    .expectStatus().isOk().expectBody()
+                    .jsonPath("$.isError").doesNotExist();
             log.info("upstream test with mock-server started done");
         }
 
